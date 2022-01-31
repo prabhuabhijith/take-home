@@ -3,14 +3,14 @@
 }
 
 .cat-wrapper {
-  flex: 0.3;
+  flex: 0.5;
   border: 1px solid;
   padding: 10px;
   margin-right: 10px;
 }
 
 .task-wrapper {
-  flex: 0.7;
+  flex: 0.5;
   border: 1px solid;
   padding: 10px;
   margin-right: 10px;
@@ -41,4 +41,8 @@
   border: 1px solid blue;
   padding: 5px;
   border-radius: 10px;
+}
+
+.add-icon {
+  float: right;
 }

@@ -1,5 +1,9 @@
 import "./styles.css";
 import React from "react";
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
 
 export default function App() {
   const [allTaskList, setAllTaskList] = React.useState([]);
@@ -7,6 +11,24 @@ export default function App() {
   const [catName, setCatName] = React.useState("");
   const [taskName, setTaskName] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [openTask, setOpenTask] = React.useState(false);
+
+  const openDialogBox = () => {
+    setOpen(true);
+  };
+
+  const openDialogBoxforTask = () => {
+    setOpenTask(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleCloseTask = () => {
+    setOpenTask(false);
+  };
 
   const addNewCategory = () => {
     var newCategory = {
@@ -18,6 +40,7 @@ export default function App() {
     }
     setAllCategories((prevState) => [...prevState, newCategory]);
     setCatName("");
+    setOpen(false);
   };
 
   const addNewTask = () => {
@@ -29,6 +52,7 @@ export default function App() {
     };
     setAllTaskList((prevState) => [...prevState, newTask]);
     setTaskName("");
+    setOpenTask(false);
   };
 
   const deleteTask = (id) => {
@@ -67,16 +91,30 @@ export default function App() {
               </p>
             </div>
           ))}
-          <input
+          <button className="add-icon" onClick={openDialogBox}>+</button>
+          <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>
+           Enter Category Name
+        </DialogTitle>
+        <DialogContent>
+        <input
             value={catName}
             onChange={(e) => setCatName(e.target.value)}
             placeholder="Enter Category Name"
           />
-          <br />
-          <br />
-          <button disabled={!catName} onClick={() => addNewCategory()}>
-            Add Categories
+        </DialogContent>
+        <DialogActions>
+        <button disabled={!catName} onClick={() => addNewCategory()}>
+            Add Category
           </button>
+          <button onClick={handleClose} color="primary" autoFocus>
+           Cancel
+          </button>
+        </DialogActions>
+      </Dialog>
+          <br />
+          <br />
+          
         </div>
         <div className="task-wrapper">
           <p>Tasks for Category</p>
@@ -102,20 +140,34 @@ export default function App() {
                 </span>
               </div>
             ))}
-          <input
+        
+          <br />
+          <br />
+          <button className="add-icon" onClick={openDialogBoxforTask}>+</button>
+          <Dialog open={openTask} onClose={handleCloseTask}>
+        <DialogTitle>
+           Enter Task Name
+        </DialogTitle>
+        <DialogContent>
+        <input
             value={taskName}
             onChange={(e) => setTaskName(e.target.value)}
             placeholder="Enter Task Name"
             disabled={!selectedCategory}
           />
-          <br />
-          <br />
-          <button
+        </DialogContent>
+        <DialogActions>
+        <button
             disabled={!selectedCategory || !taskName}
             onClick={() => addNewTask()}
           >
             Add Task
           </button>
+          <button onClick={handleCloseTask} color="primary" autoFocus>
+           Cancel
+          </button>
+        </DialogActions>
+      </Dialog>
         </div>
       </div>
     </div>
